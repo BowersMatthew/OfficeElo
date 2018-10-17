@@ -3,15 +3,16 @@ package Models;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.theories.Theory;
-import org.junit.rules.ExpectedException;
 import org.testfx.framework.junit.ApplicationTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class PlayerTest extends ApplicationTest {
 
-    Player player1;
+    private Player player1;
     @Before
     public void setUp() {
         player1 = new Player(1, "Matt", "Bowers", 1234);
@@ -20,6 +21,43 @@ public class PlayerTest extends ApplicationTest {
     @Test(expected = IllegalArgumentException.class)
     public void setFirstName_ThrowsException_When_TooShort() {
         player1.setFirstName("a");
+    }
+
+    private String[] badNames = {"12s4", "Matt2", "5Matt", "Test s2ace"};
+    @Test
+    public void setFirstName_ThrowsException_When_HasDigits() {
+        int count = 0;
+        int expected = 4;
+        ArrayList<String> worked = new ArrayList<String>(5);
+        for (String name : badNames)
+        try {
+            player1.setFirstName(name);
+            worked.add(name);
+        } catch (Exception e) {
+            count++;
+        }
+        for (String name : worked) {
+            System.out.println("Successful Names: " + name);
+        }
+        assertEquals(expected, count);
+    }
+
+    @Test
+    public void setLastName_ThrowsException_When_HasDigits() {
+        int count = 0;
+        int expected = 4;
+        ArrayList<String> worked = new ArrayList<String>(5);
+        for (String name : badNames)
+            try {
+                player1.setLastName(name);
+                worked.add(name);
+            } catch (Exception e) {
+                count++;
+            }
+        for (String name : worked) {
+            System.out.println("Successful Names: " + name);
+        }
+        assertEquals(expected, count);
     }
 
     @Test
@@ -71,7 +109,7 @@ public class PlayerTest extends ApplicationTest {
         try{
             player1.setPin(newPin);
         } catch (IllegalArgumentException e) {
-
+            e.printStackTrace();
         }
         // check successful change
         assertTrue(player1.checkPin(newPin));

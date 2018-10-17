@@ -8,6 +8,12 @@ public class Player {
     private String lastName;
     private Integer pin;
 
+    private static String nameError = "names must contain only letters and be at least 2 characters long";
+
+    public Player() {
+
+    }
+
     public Player(int ID, String firstName, String lastName, int pin ) throws IllegalArgumentException {
         setID(ID);
         setFirstName(firstName);
@@ -28,7 +34,8 @@ public class Player {
     }
 
     public void setFirstName(String firstName) throws IllegalArgumentException {
-        if (firstName.length() < 2) throw new IllegalArgumentException("First Name must have at least two letters");
+        if (firstName.length() < 2 || firstName.matches(".*\\d+.*"))
+            throw new IllegalArgumentException(nameError);
         else this.firstName = firstName;
     }
 
@@ -37,12 +44,9 @@ public class Player {
     }
 
     public void setLastName(String lastName) throws IllegalArgumentException {
-        if (lastName.length() < 2) throw new IllegalArgumentException("Last Name must have at least two letters");
+        if (lastName.length() < 2 || lastName.matches(".*\\d.*"))
+            throw new IllegalArgumentException(nameError);
         else this.lastName = lastName;
-    }
-
-    private Integer getPin() {
-        return pin;
     }
 
     public boolean checkPin(Integer pin) {
