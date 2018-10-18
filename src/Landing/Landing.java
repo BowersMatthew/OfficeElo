@@ -1,15 +1,20 @@
 package Landing;
 
+import Utilities.Database.dbConnection;
 import Utilities.Utilities;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import static javafx.fxml.FXMLLoader.load;
 
 public class Landing extends Application {
 
     public static void main(String[] args) {
+        dbConnection.checkUpdates();
         launch(args);
     }
 
